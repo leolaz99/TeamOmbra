@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Velocità del personaggio")]
     [SerializeField] float speed;
@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("Tempo di recupero della schivata")]
     [SerializeField] float dashCD;
-    
+
+    [SerializeField] GameObject parryCollider;
+
     Rigidbody rb;
 
     bool candash = true;
@@ -22,12 +24,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         rb.velocity = direction.normalized * speed * Time.deltaTime;
     }
 
     void Dash()
     {
+        Debug.Log("DASH");
         rb.AddForce(direction * dashSpeed, ForceMode.VelocityChange);
         candash = false;
     }
@@ -47,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Parry()
+    {
+        parryCollider.SetActive(true);
+    }
+
     IEnumerator DashCD()
     {            
         yield return new WaitForSeconds(dashCD);
@@ -61,16 +69,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Parry();       
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space) && candash == true)
-        {   
-            Dash();  
+        {
+            Dash();
             StartCoroutine(DashCD());
-        }              
+        }      
+        
+        Rotation();
     }
 
     void FixedUpdate()
-    {
-        Rotation();
+    {   
         Move();     
     }
 }
