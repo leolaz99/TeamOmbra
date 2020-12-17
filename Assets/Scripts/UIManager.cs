@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Slider hp;
@@ -10,7 +9,7 @@ public class UIManager : MonoBehaviour
     
     public void HP()
     {
-        hp.value = PlayerManager.instance.life;
+        hp.value = (PlayerManager.instance.life/100f);
     }
 
     public void Dash()

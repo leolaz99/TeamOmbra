@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Velocità del personaggio")]
-    [SerializeField] float speed;
+    public float speed;
 
     [Tooltip("Velocità della schivata")]
     [SerializeField] float dashSpeed;
@@ -15,11 +15,8 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] GameObject parryCollider;
 
     Rigidbody rb;
-
     bool candash = true;
-
     float speedRotation=1000f;  
-
     Vector3 direction;
 
     void Move()
@@ -30,7 +27,6 @@ public class PlayerInput : MonoBehaviour
 
     void Dash()
     {
-        Debug.Log("DASH");
         rb.AddForce(direction * dashSpeed, ForceMode.VelocityChange);
         candash = false;
     }
@@ -71,7 +67,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Parry();       
+            Parry();
         }
         
         if (Input.GetKeyDown(KeyCode.Space) && candash == true)
@@ -84,7 +80,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void FixedUpdate()
-    {   
-        Move();     
+    {  
+        Move();            
     }
 }
