@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd628eb9e375f41aa567b6cafe3bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parryTimer: 1
+  parryTimer: 0.1
 --- !u!1 &1688086836
 GameObject:
   m_ObjectHideFlags: 0
