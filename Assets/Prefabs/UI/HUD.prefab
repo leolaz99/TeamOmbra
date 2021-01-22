@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 2413945227355207394}
   - component: {fileID: 2413945227355207395}
   m_Layer: 5
-  m_Name: ENERGY
+  m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

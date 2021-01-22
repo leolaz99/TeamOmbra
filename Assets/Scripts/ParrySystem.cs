@@ -15,6 +15,7 @@ public class ParrySystem : MonoBehaviour
         Destroy(other.gameObject);
         playerInput.speed = originalSpeed;
         gameObject.SetActive(false);
+        PlayerManager.instance.energy += 10;
     }
 
     IEnumerator Parry()

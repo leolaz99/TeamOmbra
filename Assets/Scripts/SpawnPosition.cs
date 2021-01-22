@@ -11,7 +11,7 @@ public class SpawnPosition : MonoBehaviour
     void Update()
     {
         timer = timer + Time.deltaTime;
-        if (timer >= 1)
+        if (timer >= 2)
         {
             int rand = Random.Range(1, 5);
             if (rand == 1)

@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 1733957612}
+  energy: {fileID: 263765510}
   dash: {fileID: 1870433868}
 --- !u!4 &238312822
 Transform:
@@ -198,6 +199,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &263765510 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2413945227355207395, guid: 18ce8725ac1a11c45991d71a9f8557e8, type: 3}
+  m_PrefabInstance: {fileID: 2413945228977343220}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &289923431
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
+  energy: 0
 --- !u!65 &549314027
 BoxCollider:
   m_ObjectHideFlags: 0
