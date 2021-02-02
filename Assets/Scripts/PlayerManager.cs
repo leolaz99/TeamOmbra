@@ -8,9 +8,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(collision.gameObject);
-        life -= 20;
-        energy = 0;
+        if(collision.gameObject.tag != "NormalAttack" && collision.gameObject.tag != "ChargeAttack")
+        {
+            Destroy(collision.gameObject);
+            life -= 20;
+            energy = 0;
+        }
     }
     
     

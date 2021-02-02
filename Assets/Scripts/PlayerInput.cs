@@ -21,7 +21,15 @@ public class PlayerInput : MonoBehaviour
 
     void Move()
     {
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        if(GetComponentInChildren<AttackSystem>().CanOnlyMove == true)
+        {
+            direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        }
+        else
+        {
+            direction = new Vector3(0, 0, 0);
+        }
+
         rb.velocity = direction.normalized * speed * Time.deltaTime;
     }
 
