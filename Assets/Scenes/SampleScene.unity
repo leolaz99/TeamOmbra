@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
-  energy: 100
+  energy: 0
 --- !u!65 &549314027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -734,7 +734,9 @@ MonoBehaviour:
   ChargeDamageInspector: 2
   WeaponDistance: {fileID: 1643360270909056553, guid: a61a307395fa6464dbee63a68bc5414d, type: 3}
   WeaponNear: {fileID: 486526151146788496, guid: 0e70d415da9e6f74cbf151571c93c1b8, type: 3}
-  WeaponIsDistance: 0
+  WeaponIsDistance: 1
+  CanOnlyMove: 1
+  CanOnlyRotate: 0
 --- !u!1 &815858276
 GameObject:
   m_ObjectHideFlags: 0

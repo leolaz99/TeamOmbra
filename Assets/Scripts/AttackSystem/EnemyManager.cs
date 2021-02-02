@@ -27,12 +27,12 @@ public class EnemyManager : MonoBehaviour
     #region Collision Zone
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "LightAttack")
+        if (collision.gameObject.tag == "NormalAttack")
         {
             Life -= AttackSystem.NormalDamage;
             print("Colpito");
         }
-        else if (collision.gameObject.tag == "HeavyAttack")
+        else if (collision.gameObject.tag == "ChargeAttack")
         {
             Life -= AttackSystem.ChargeDamage;
             print("Colpito");
