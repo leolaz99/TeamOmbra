@@ -8,46 +8,89 @@ public class AttackSystem : MonoBehaviour
     #region Variables
     //public bool CanAttack = true;
 
-    public float PressTimerAttack = 0;      //ReadOnly - Timer che indica in secondi il tempo in cui il pulsante è premuto
-
-    public int Energy = 10;                             //Vieni passato da un altro script
-    public int EnergyConsumed = 0;                      //ReadOnly - Energia consumata durante un attacco se leggero, e durante la carica di un attacco se pesante
-
-    public float SecEnergyCharge = 1;                    //Second of time between normal and charge attack and drain energy
-    public float TimerSecEnergyHeavy = 0;               //ReadOnly
-
+    [Space(10)]
+    [Header("------- Damage Value - Attack Management")]
+    [Tooltip("E' il danno di un'arma non caricata")]
     public int NormalDamageInspector = 2;         //Visualizzazione in inspector del danno leggero e possibilità di settarlo
-    public static int NormalDamage;                      //
+    public static int NormalDamage;
+    [Tooltip("E' il danno base di un'arma caricata - Nel codice diventa un moltiplicatore")]
     public int ChargeDamageInspector = 4;         //Visualizzazione in inspector del danno pesante e possibilità di settarlo
-    public static int ChargeDamage;                      //
+    public static int ChargeDamage;
+
+    [Space(10)]
+    [Header("------- Energy Value - Attack Management")]
+    [Space(20)]
+    public int LoseHitEnergy;
+
+    [Space(10)]
+    [Header("------- Charge Value - Attack Management")]
+    [Space(20)]
+    [Tooltip("E' il tempo che passa tra il consumo di una tacca di energia e l'altra")]
+    public float SecEnergyCharge = 1;                    //Second of time between normal and charge attack and drain energy
+
 
     //public ParticleSystem[] AttackParticle = new ParticleSystem[5];     //
 
+    [Space(5)]
+    [Header("Reference - GameObject che indicano il tipo di proiettile che la relativa arma spara")]
+    [Space(10)]
+    [Header("------- Gameobject and UI - Attack Management")]
+    [Space(20)]
 
-    [Header("Test")]
+    [Tooltip("Gameobject per il proiettile dell'arma ranged")]
     public GameObject WeaponDistance;
+    [Tooltip("Gameobject per il proiettile dell'arma melee")]
     public GameObject WeaponNear;
-    public bool WeaponIsDistance;
 
-    public bool CanOnlyMove;
-    public bool CanOnlyRotate;
-
+    [Space(5)]
+    [Header("UI - Switch Weapon")]
+    [Tooltip("Referenza del gameobject nella ui nella posizione relativa all'arma disattivata")]
     public Image WeaponActive;
+    [Tooltip("Referenza del gameobject nella ui nella posizione relativa all'arma disattivata")]
     public Image WeaponDeactive;
 
+    [Space(5)]
+    [Header("ReadOnly - Le seguenti variabili sono read only per test dei programmatori - Non Toccare")]
+    [Header("------------------------------------------------------------------------------------------------------------------------")]
+    [Space(50)]
+    [Tooltip("ReadOnly - Booleano che indica se l'arma corrente è melee o ranged")]
+    public bool WeaponIsDistance;
+    [Tooltip("ReadOnly - Variabile per bloccare il movimento del player quando carica l'attacco e attacca")]
+    public bool CanOnlyMove;
+    [Tooltip("ReadOnly - Variabile per bloccare la rotazione nel player nel periodo di attacco (dopo il possibile caricamento)")]
+    public bool CanOnlyRotate;
+    [Tooltip("ReadOnly - E' un timer che indica se il caricamento è superiore a SecEnegyCharge")]
+    public float TimerSecEnergyHeavy = 0;               //ReadOnly
+    [Tooltip("ReadOnly - Indica quanto tempo hai premuto il pulsante per caricare l'attacco")]
+    public float PressTimerAttack = 0;      //ReadOnly - Timer che indica in secondi il tempo in cui il pulsante è premuto
+    [Tooltip("ReadOnly - Tiene traccia dell'energia consumata quando attacco senza caricamento e sia con il caricamento")]
+    public int EnergyConsumed = 0;                      //ReadOnly - Energia consumata durante un attacco se leggero, e durante la carica di un attacco se pesante
+
+
+
+
+
+
+
+
     #endregion
+
     private void Start()
     {
         InitializerAttack();
     }
+
     void Update()
     {
         AttackPlayer();
-
         SwitchWeapon();
     }
 
     #region Method
+
+    /// <summary>
+    /// Metodo richiamato nello start per inizializzare varie variabili
+    /// </summary>
     public void InitializerAttack()
     {
         NormalDamage = NormalDamageInspector;
@@ -65,6 +108,9 @@ public class AttackSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Metodo che gestisce l'attacco del player, sia melee e sia ranged
+    /// </summary>
     public void AttackPlayer()
     {
         if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.Joystick1Button5))
@@ -74,9 +120,9 @@ public class AttackSystem : MonoBehaviour
         }
         if ((Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Joystick1Button5)) && PressTimerAttack < SecEnergyCharge)      //Rilascio
         {
-            if (GetComponentInParent<PlayerManager>().energy >= 1)
+            if (GetComponentInParent<PlayerManager>().energy >= LoseHitEnergy)
             {
-                GetComponentInParent<PlayerManager>().energy -= 1;
+                GetComponentInParent<PlayerManager>().energy -= LoseHitEnergy;
                 //Rimuovi tacca dalla ui (probabile venga fatto in un altro script)
                 Debug.Log("Attacco Normale");
                 if (WeaponIsDistance == true)
@@ -105,12 +151,12 @@ public class AttackSystem : MonoBehaviour
         }
         else if ((Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))|| (Input.GetKey(KeyCode.Joystick1Button5) || Input.GetKeyUp(KeyCode.Joystick1Button5)))
         {
-            if (GetComponentInParent<PlayerManager>().energy >= 1)
+            if (GetComponentInParent<PlayerManager>().energy >= LoseHitEnergy)
             {
                 TimerSecEnergyHeavy += Time.deltaTime;
                 if (TimerSecEnergyHeavy >= SecEnergyCharge)
                 {
-                    GetComponentInParent<PlayerManager>().energy -= 1;
+                    GetComponentInParent<PlayerManager>().energy -= LoseHitEnergy;
                     EnergyConsumed += 1;
                     //Animazione carica
                     //Rimozione tacca (probabile venga fatto in un altro script)
@@ -184,6 +230,9 @@ public class AttackSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Discharge()
     {
         //Suono guanto scarico
@@ -224,5 +273,6 @@ public class AttackSystem : MonoBehaviour
             WeaponDeactive.color = Color.green;
         }
     }
+
     #endregion
 }

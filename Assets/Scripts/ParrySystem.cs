@@ -7,6 +7,9 @@ public class ParrySystem : MonoBehaviour
     [Tooltip("Tempo nel quale il parry è attivo")]
     [SerializeField] float parryTimer;
 
+    [Tooltip("Energia guardagnata eseguendo il parry correttamente")]
+    [SerializeField] int parryGainEnergy = 10;
+
     PlayerInput playerInput;
     float originalSpeed;
 
@@ -15,7 +18,7 @@ public class ParrySystem : MonoBehaviour
         Destroy(other.gameObject);
         playerInput.speed = originalSpeed;
         gameObject.SetActive(false);
-        PlayerManager.instance.energy += 10;
+        PlayerManager.instance.energy += parryGainEnergy;
     }
 
     IEnumerator Parry()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Header("Life Behaviour")]
+    [Tooltip("Indica la vita del nemico")]
     public int Life;
 
     #region Trigger Zone
