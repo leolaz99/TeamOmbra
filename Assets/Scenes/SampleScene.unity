@@ -256,6 +256,17 @@ MonoBehaviour:
   prefab: {fileID: 901671710732968011, guid: 58a607c12a21ba04b86948d9a7d7060a, type: 3}
   spawn1: {fileID: 980967431}
   spawn2: {fileID: 175039719}
+--- !u!114 &359695973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8506406697260002840, guid: 18ce8725ac1a11c45991d71a9f8557e8, type: 3}
+  m_PrefabInstance: {fileID: 2413945228977343220}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &371627651
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +748,8 @@ MonoBehaviour:
   WeaponIsDistance: 1
   CanOnlyMove: 1
   CanOnlyRotate: 0
+  WeaponActive: {fileID: 1117269723}
+  WeaponDeactive: {fileID: 359695973}
 --- !u!1 &815858276
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1010,17 @@ Transform:
   m_Father: {fileID: 566328201}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1117269723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4883499049066684362, guid: 18ce8725ac1a11c45991d71a9f8557e8, type: 3}
+  m_PrefabInstance: {fileID: 2413945228977343220}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149050033
 GameObject:
   m_ObjectHideFlags: 0

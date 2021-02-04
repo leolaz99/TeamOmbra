@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackSystem : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class AttackSystem : MonoBehaviour
 
     public bool CanOnlyMove;
     public bool CanOnlyRotate;
+
+    public Image WeaponActive;
+    public Image WeaponDeactive;
+
     #endregion
     private void Start()
     {
@@ -38,6 +43,8 @@ public class AttackSystem : MonoBehaviour
     void Update()
     {
         AttackPlayer();
+
+        SwitchWeapon();
     }
 
     #region Method
@@ -45,6 +52,17 @@ public class AttackSystem : MonoBehaviour
     {
         NormalDamage = NormalDamageInspector;
         ChargeDamage = ChargeDamageInspector;
+
+        if(WeaponIsDistance == true)
+        {
+            WeaponActive.color = Color.red;
+            WeaponDeactive.color = Color.green;
+        }
+        else
+        {
+            WeaponActive.color = Color.green;
+            WeaponDeactive.color = Color.red;
+        }
     }
 
     public void AttackPlayer()
@@ -182,6 +200,29 @@ public class AttackSystem : MonoBehaviour
     {
         CanOnlyMove = true;
         CanOnlyRotate = true;
+    }
+
+    /// <summary>
+    /// Metodo per cambiare l'arma da melee a ranged quando vengono premuti i relativi tasti
+    /// </summary>
+    public void SwitchWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            //Animazione + Possibile timer di animazione o booleano
+            //Suono
+            WeaponIsDistance = false;
+            WeaponActive.color = Color.green;
+            WeaponDeactive.color = Color.red;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+        {
+            //Animazione + Possibile timer di animazione o booleano
+            //Suono
+            WeaponIsDistance = true;
+            WeaponActive.color = Color.red;
+            WeaponDeactive.color = Color.green;
+        }
     }
     #endregion
 }
