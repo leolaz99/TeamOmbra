@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BRAggro : StateMachineBehaviour
 {
+    public float TimerAttack;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        TimerAttack = 0;
+    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,10 +18,14 @@ public class BRAggro : StateMachineBehaviour
         {
             animator.GetComponent<BRControllerIA>().agent.isStopped = false;
             animator.GetComponent<BRControllerIA>().agent.SetDestination(animator.GetComponent<BRControllerIA>().Player.transform.position);
+            TimerAttack = 0;
         }
         else
         {
             animator.GetComponent<BRControllerIA>().agent.isStopped = true;
+            TimerAttack += Time.deltaTime;
+            if(TimerAttack >= 5)
+                animator.SetBool("BR-CanAttack", true);
         }
     }
 

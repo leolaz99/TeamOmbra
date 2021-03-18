@@ -24,6 +24,8 @@ public class BRControllerIA : MonoBehaviour
     public bool AlertDistance = false;
     public GameObject Way;
 
+    public GameObject Bullet;
+
     /// <summary>
     /// Metodo che agisce in editor dopo una modifica dell'inspector
     /// </summary>
