@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     {
         if(collision.gameObject.tag != "NormalAttack" && collision.gameObject.tag != "ChargeAttack")
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
             life -= 20;
             energy = 0;
         }
