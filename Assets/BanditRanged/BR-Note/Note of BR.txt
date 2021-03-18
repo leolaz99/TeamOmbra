@@ -1,0 +1,18 @@
+Il nemico ha due aree circolari
+	- L'area di attacco						--> GameObject corrispondente: Range - Attack
+	- L'area di distanza di sicurezza		--> GameObject corrispondente: Range - SecurityDistance
+
+I due valori principali di queste aree sono la X e la Z, cioè larghezza e lunghezza, l'altezza Y non serve
+	- Entrambi i valori si devono poter modificare da uno script	--> Script corrispondente:
+
+
+
+
+Link:
+https://docs.google.com/document/d/1Ag8x-9N-5KN29Pm_cTHl-Z_DvNLHk41uu_WqKBjcFPM/edit#heading=h.5f5gn1jisme0
+https://drive.google.com/file/d/1WXYAO7ruW5-XxC6onMiytmGglArxW0vq/view?usp=sharing
+https://answers.unity.com/questions/15636/how-can-i-check-the-line-of-sight-to-see-if-the-pl.html
+https://docs.unity3d.com/ScriptReference/GeometryUtility.TestPlanesAABB.html
+https://docs.unity3d.com/ScriptReference/GeometryUtility.CalculateFrustumPlanes.html
+https://answers.unity.com/questions/8003/how-can-i-know-if-a-gameobject-is-seen-by-a-partic.html
+https://answers.unity.com/questions/27558/activate-object-only-if-camera-views-it.html
