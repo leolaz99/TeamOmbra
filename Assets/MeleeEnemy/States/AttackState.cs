@@ -10,7 +10,7 @@ public class AttackState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //animator.transform.Translate(animator.transform.forward * attackSpeed * Time.deltaTime);
+        animator.transform.Translate(Vector3.forward * attackSpeed * Time.deltaTime);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
