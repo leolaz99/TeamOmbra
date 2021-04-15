@@ -158,6 +158,39 @@ public class BRControllerIA : MonoBehaviour
         //Non viene distrutto e non viene disattivato
     }
     #endregion
+
+    #region Event - BR Attack State
+    public void EventBRAttackShoot()
+    {
+        //AttackDrawLine = false; //Disattiva la linea di calcolo (?)
+        Instantiate(Bullet, agent.transform.position, agent.transform.rotation);    //Istanzia il proiettile
+        //Va in recovery
+    }
+    public void EventBRAttackFinish()
+    {
+        GetComponent<Animator>().SetBool("BR-CanAttack", false); //Finisce lo stato di attaco
+    }
+    #endregion
+
+    #region Event - BR Take Damage State
+    public void EventBRFinishTakeDamage()
+    {
+        //GetComponent<Animator>().Play("BR - Idle State"); //Temp
+
+        if (AlertDistance == true)                                                                          //Se è nel distanziamento
+        {
+            GetComponent<Animator>().Play("BR - Distancing State"); //Temp - Passaggio istantaneo           TODO: Controllare i parametri
+        }
+        else if (EnemyRenderer.isVisible && PlayerInRoom == RoomNumber)                                     //Se è nell'aggro
+        {
+            GetComponent<Animator>().Play("BR - Aggro State"); //Temp - Passaggio istantaneo                TODO: Controllare i parametri
+        }
+        else if (AlertDistance == false)                                                                    //Se è nella fase di attacco - Va modificato
+        {
+            GetComponent<Animator>().Play("BR - Attack State"); //Temp - Passaggio istantaneo               TODO: Controllare i parametri
+        }
+    }
+    #endregion
 }
 
 

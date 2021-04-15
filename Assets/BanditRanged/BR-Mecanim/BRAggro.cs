@@ -22,10 +22,10 @@ public class BRAggro : StateMachineBehaviour
         }
         else
         {
-            animator.GetComponent<BRControllerIA>().agent.isStopped = true;
-            TimerAttack += Time.deltaTime;
-            if(TimerAttack >= 5)
-                animator.SetBool("BR-CanAttack", true);
+            animator.GetComponent<BRControllerIA>().agent.isStopped = true;                 //Ferma il movimento
+            TimerAttack += Time.deltaTime;                                                  //Aumenta il timer
+            if(TimerAttack >= 5)                                                            //Se il timer è maggiore di un valore TODO: Mettere 5 da inspector
+                animator.SetBool("BR-CanAttack", true);                                     //Passa di stato
         }
     }
 

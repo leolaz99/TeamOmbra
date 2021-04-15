@@ -6,7 +6,8 @@ I due valori principali di queste aree sono la X e la Z, cioè larghezza e lunghe
 	- Entrambi i valori si devono poter modificare da uno script	--> Script corrispondente:
 
 
-
+Manca il knockback
+Completare il TakeDamage
 
 Link:
 https://docs.google.com/document/d/1Ag8x-9N-5KN29Pm_cTHl-Z_DvNLHk41uu_WqKBjcFPM/edit#heading=h.5f5gn1jisme0
@@ -16,3 +17,26 @@ https://docs.unity3d.com/ScriptReference/GeometryUtility.TestPlanesAABB.html
 https://docs.unity3d.com/ScriptReference/GeometryUtility.CalculateFrustumPlanes.html
 https://answers.unity.com/questions/8003/how-can-i-know-if-a-gameobject-is-seen-by-a-partic.html
 https://answers.unity.com/questions/27558/activate-object-only-if-camera-views-it.html
+
+
+
+
+
+Attacco è diviso in 3 parti
+- Anticipazione/Puntamento
+- Colpo/Sparo
+- Recovery
+
+Nel puntamento viene calcolata la linea di tiro, una linea retta tra il nemico e il player
+Nello sparo il nemico sparerà il colpo istanziandolo (Forse evento)
+Nel Recovery il nemico starà fermo in attesa del termine dell'animazione, all'uscita dell'animazione si vedrà in che punto sta il player
+
+Script BRTracking:
+	animator.SetBool("BR-CanAttack", true);	//Forse va qua, non crea loop di entrata
+	Debug.DrawLine(animator.GetComponent<BRControllerIA>().agent.transform.position, animator.GetComponent<BRControllerIA>().Player.transform.position); //Disegna una linea tra il nemico e il player
+
+Script BRShot:
+	Instantiate(animator.GetComponent<BRControllerIA>().Bullet, animator.GetComponent<BRControllerIA>().agent.transform.position, animator.GetComponent<BRControllerIA>().agent.transform.rotation); //Istanzia il proiettile
+
+Script BRRecovery
+	Sta fermo e vede dove si loca il player
