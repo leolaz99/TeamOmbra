@@ -3,10 +3,10 @@
 public class IdleState : StateMachineBehaviour
 {
     AggroController aggroController;
-    
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        aggroController = animator.GetComponentInChildren<AggroController>();
+        aggroController = animator.GetComponent<AggroController>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -8,7 +8,10 @@ public class EnemyManager : MonoBehaviour
     [Tooltip("Indica la vita del nemico")]
     public int Life;
     public bool isParryed = false;
+    public static bool isAggro = false;
 
+    public Collider aggroArea;
+ 
     public static EnemyManager instance;
 
     #region Trigger Zone
