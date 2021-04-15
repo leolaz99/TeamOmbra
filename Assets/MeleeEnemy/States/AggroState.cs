@@ -12,7 +12,9 @@ public class AggroState : StateMachineBehaviour
         attackController = animator.GetComponentInChildren<AttackController>();
         enemyMove.navMeshAgent.isStopped = false;
         attackController.isAttack = false;
-        enemyMove.navMeshAgent.speed = aggroSpeed;      
+        enemyMove.navMeshAgent.speed = aggroSpeed;
+        animator.SetBool("GoToStun", false);
+        animator.SetBool("GoToRecovery", false);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -28,6 +30,7 @@ public class AggroState : StateMachineBehaviour
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {       
+    {
+        animator.ResetTrigger("GoToAggro");
     }
 }

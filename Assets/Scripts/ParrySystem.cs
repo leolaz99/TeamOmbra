@@ -15,10 +15,22 @@ public class ParrySystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
-        playerInput.speed = originalSpeed;
-        gameObject.SetActive(false);
-        PlayerManager.instance.energy += parryGainEnergy;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            //Destroy(other.gameObject);
+            EnemyManager.instance.isParryed = true;
+            playerInput.speed = originalSpeed;
+            gameObject.SetActive(false);
+            PlayerManager.instance.energy += parryGainEnergy;
+        }
+
+        //if (other.gameObject.CompareTag("Bullet"))
+        //{
+        //    Destroy(other.gameObject);
+        //    playerInput.speed = originalSpeed;
+        //    gameObject.SetActive(false);
+        //    PlayerManager.instance.energy += parryGainEnergy;
+        //}
     }
 
     IEnumerator Parry()

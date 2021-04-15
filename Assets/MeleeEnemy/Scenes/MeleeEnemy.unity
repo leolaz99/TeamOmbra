@@ -231,7 +231,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.04, y: 0.5, z: 0.68}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 512700698}
   m_Layer: 0
   m_Name: Melee Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,6 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 1
+  isParryed: 0
 --- !u!114 &512700698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,11 +524,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!95 &512700700
 Animator:
@@ -1185,8 +1186,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1503929425}
-  - component: {fileID: 1503929427}
   - component: {fileID: 1503929426}
+  - component: {fileID: 1503929427}
   m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
@@ -1201,13 +1202,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1503929424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 512700696}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1503929426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,8 +1222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttack: 0
---- !u!135 &1503929427
-SphereCollider:
+--- !u!136 &1503929427
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1231,9 +1232,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.49377054
+  m_Height: 5.0933375
+  m_Direction: 1
+  m_Center: {x: -0.010658379, y: 2.0466695, z: -0.0008975213}
 --- !u!1 &1524919473
 GameObject:
   m_ObjectHideFlags: 0

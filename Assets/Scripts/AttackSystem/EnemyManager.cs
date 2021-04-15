@@ -7,6 +7,9 @@ public class EnemyManager : MonoBehaviour
     [Header("Life Behaviour")]
     [Tooltip("Indica la vita del nemico")]
     public int Life;
+    public bool isParryed = false;
+
+    public static EnemyManager instance;
 
     #region Trigger Zone
     private void OnTriggerEnter(Collider other)
@@ -46,4 +49,10 @@ public class EnemyManager : MonoBehaviour
         }
     }
     #endregion
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 }
