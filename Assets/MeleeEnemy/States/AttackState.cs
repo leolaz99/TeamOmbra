@@ -9,6 +9,7 @@ public class AttackState : StateMachineBehaviour
     {
         enemyManager = animator.GetComponent<EnemyManager>();
         enemyManager.isParryed = false;
+        enemyManager.isAttacking = true;
         animator.SetBool("GoToRecovery", true);
     }
 
@@ -26,6 +27,6 @@ public class AttackState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        enemyManager.isAttacking = false;
     }
 }

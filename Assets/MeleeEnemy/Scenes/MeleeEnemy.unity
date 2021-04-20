@@ -558,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 1
   isParryed: 0
+  isAttacking: 0
   aggroArea: {fileID: 900010396}
 --- !u!114 &512700698
 MonoBehaviour:
@@ -1287,6 +1288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 1
   isParryed: 0
+  isAttacking: 0
   aggroArea: {fileID: 690257745}
 --- !u!195 &1203311709
 NavMeshAgent:
@@ -1512,7 +1514,7 @@ GameObject:
   - component: {fileID: 1299621258}
   m_Layer: 0
   m_Name: Parry Collider
-  m_TagString: Untagged
+  m_TagString: Parry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1529,7 +1531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd628eb9e375f41aa567b6cafe3bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parryTimer: 0.1
+  parryTimer: 1
   parryGainEnergy: 10
 --- !u!135 &1299621259
 SphereCollider:

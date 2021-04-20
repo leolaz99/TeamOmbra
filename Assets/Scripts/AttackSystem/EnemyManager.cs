@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
     [Tooltip("Indica la vita del nemico")]
     public int Life;
     public bool isParryed = false;
+    public bool isAttacking = false;
     public static bool isAggro = false;
 
     public Collider aggroArea;
@@ -30,6 +31,13 @@ public class EnemyManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if(other.tag == "Parry")
+        {
+            if (isAttacking == true)
+                isParryed = true;
+        }
+        
     }
     #endregion
     #region Collision Zone

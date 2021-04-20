@@ -8,6 +8,7 @@ TagManager:
   - ChargeAttack
   - Enemy
   - AggroArea
+  - Parry
   layers:
   - Default
   - TransparentFX
