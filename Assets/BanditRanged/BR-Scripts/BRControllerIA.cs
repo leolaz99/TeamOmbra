@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class BRControllerIA : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class BRControllerIA : MonoBehaviour
 
     public GameObject Bullet;
 
+    [Header("Life Behaviour")]
+    [Tooltip("Indica la vita del nemico")]
+    public int Life;
+    string OtherTag;
+
     /// <summary>
     /// Metodo che agisce in editor dopo una modifica dell'inspector
     /// </summary>
@@ -39,12 +45,14 @@ public class BRControllerIA : MonoBehaviour
     void Start()
     {
         EnemyRenderer = GetComponent<Renderer>();
+
+        ActionRemoveLife = ColliderRemoveLife;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        GetComponent<Animator>().SetInteger("BR-Life", Life);       //Uguaglio il parametro life con l'effettiva vita del player
     }
 
     #region State
@@ -191,6 +199,26 @@ public class BRControllerIA : MonoBehaviour
         }
     }
     #endregion
+
+
+    public Action ActionRemoveLife;
+
+    public void ColliderRemoveLife()
+    {
+        if (OtherTag == "NormalAttack")
+            Life -= AttackSystem.NormalDamage;
+        else if (OtherTag == "ChargeAttack")
+            Life -= AttackSystem.ChargeDamage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NormalAttack" || other.tag == "ChargeAttack")
+        {
+            OtherTag = other.tag;
+            GetComponent<Animator>().SetTrigger("BR-Damage");
+        }
+    }
 }
 
 
