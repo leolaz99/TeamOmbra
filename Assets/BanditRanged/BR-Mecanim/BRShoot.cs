@@ -7,7 +7,7 @@ public class BRShoot : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Instantiate(animator.GetComponent<BRControllerIA>().Bullet, animator.GetComponent<BRControllerIA>().agent.transform.position, animator.GetComponent<BRControllerIA>().agent.transform.rotation);
+        Instantiate(BRControllerIA.BRController.Bullet, BRControllerIA.BRController.agent.transform.position, BRControllerIA.BRController.agent.transform.rotation);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

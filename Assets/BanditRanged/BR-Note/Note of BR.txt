@@ -40,3 +40,15 @@ Script BRShot:
 
 Script BRRecovery
 	Sta fermo e vede dove si loca il player
+
+
+
+
+
+
+
+
+
+
+
+Controllare riga 20 in script BRAggro

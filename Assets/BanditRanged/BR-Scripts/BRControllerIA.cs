@@ -6,56 +6,92 @@ using System;
 
 public class BRControllerIA : MonoBehaviour
 {
-    public GameObject SecurityDistanceArea;         //Si riferesce all'area della distanza di sicurezza del nemico
-    public float XValueSDA;                         //Corrisponde alla X della distanza di sicurezza
-    public float ZValueSDA;                         //Corrisponde alla Z della distanza di sicurezza
-
-    public GameObject AttackArea;                   //Si riferesce all'area dell'attacco del nemico
-    public float XValueAA;                          //Corrisponde alla X dell'attacco
-    public float ZValueAA;                          //Corrisponde alla Z dell'attacco
-
-    /*[HideInInspector]*/ public Renderer EnemyRenderer;
-
-    public int RoomNumber = 0;
-    public int PlayerInRoom = 0;            //Questo sarà un valore static definito dal player
+    public static BRControllerIA BRController;
     
-    public GameObject Player;
-    public NavMeshAgent agent;
-
-    public bool AlertDistance = false;
-    public GameObject Way;
-
-    public GameObject Bullet;
-
+    public GameObject Player;                           //Variabile dedicata al player utilizzata come target per l'attacco e il movimento
+    
     [Header("Life Behaviour")]
     [Tooltip("Indica la vita del nemico")]
-    public int Life;
-    string OtherTag;
+    public int Life;                                    //Indica il valore della vita
+    string OtherTag;                                    //Variabile temporanea che contiene il tag dell'oggetto che ha colpito il gameobjcet collegato a questo script
+    
+    [Header("Colllider Child Management")]
+    public GameObject SecurityDistanceArea;             //Si riferesce all'area della distanza di sicurezza del nemico
+    public float XValueSDA;                             //Corrisponde alla X della distanza di sicurezza
+    public float ZValueSDA;                             //Corrisponde alla Z della distanza di sicurezza
 
+    [Header("Attack value")]
+    [HideInInspector] public float TimerAttack;         //Timer che incrementa automaticamente
+    public float MaxTimerAttack;                        //Massimo valore che può raggiungere il timer che definisce ogni quanto può andare in stato di attacco
+    public GameObject Bullet;                           //Proiettile che viene istanziato quando attaccherà
+
+    [Header("Distancing Value")]
+    public float SpeedDistancing;                       //Velocità utilizzata solamente nello stato di distanziamento
+    public bool AlertDistance = false;
+
+
+    [Header("Activate enemy value in room")]
+    /*[HideInInspector]*/ public Renderer EnemyRenderer;
+    /*[HideInInspector]*/ public int RoomNumber = 0;
+    /*[HideInInspector]*/ public int PlayerInRoom = 0;                      //Questo sarà un valore static definito dal player
+    
+    [Header("Other Value")]
+    public NavMeshAgent agent;
+
+
+    #region Define Variable Action
+    public Action ActionRemoveLife;
+    #endregion
+
+    #region Lifecycle
     /// <summary>
     /// Metodo che agisce in editor dopo una modifica dell'inspector
     /// </summary>
     private void OnValidate()
     {
         SecurityDistanceArea.transform.localScale = new Vector3(XValueSDA, SecurityDistanceArea.transform.localScale.y, ZValueSDA);     //Modifica la scala dell'area della distanza di sicurezza
-        AttackArea.transform.localScale = new Vector3(XValueAA, AttackArea.transform.localScale.y, ZValueAA);                           //Modifica la scala dell'area dell'attacco del nemico
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        EnemyRenderer = GetComponent<Renderer>();
+        BRController = this;                                    //Creo una istanza per passarla negli stati
+        EnemyRenderer = GetComponent<Renderer>();               //Utilizzato per accedere al renderer di se stesso per vedere se è visibile nella inquadratura della camera
 
-        ActionRemoveLife = ColliderRemoveLife;
+        #region Define Registration Action
+        ActionRemoveLife = ColliderRemoveLife;                  //Iscrivo il metodo ColliderRemoveLife all'azione ActionRemoveLife 
+        #endregion
     }
 
-    // Update is called once per frame
     void Update()
     {
         GetComponent<Animator>().SetInteger("BR-Life", Life);       //Uguaglio il parametro life con l'effettiva vita del player
     }
+    #endregion
 
-    #region State
+    /// <summary>
+    /// Metodo che verrà richiamato nello stato di take damage che in base al tag del collider rimuoverà la vita
+    /// - Verificare se in base alle esigenze lasciare il metodo o accorparlo nell'OnTriggerEnter
+    /// </summary>
+    public void ColliderRemoveLife()
+    {
+        if (OtherTag == "NormalAttack")                     //Se il tag è uguale a "NormalAttack"
+            Life -= AttackSystem.NormalDamage;              //Diminuisco la vita con il valore di NormalDamage
+        else if (OtherTag == "ChargeAttack")                //Se il tag è uguale a "ChargeAttack"
+            Life -= AttackSystem.ChargeDamage;              //Diminuisco la vita con il valore di ChargeDamage
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NormalAttack" || other.tag == "ChargeAttack")         //Se il tag è uguale a uno di quelli proposti
+        {
+            OtherTag = other.tag;                                               //Definisco la string con il tag dell'attacco ricevuto
+            GetComponent<Animator>().SetTrigger("BR-Damage");                   //Cambio stato tramite il parametro BR-Damage e passare allo stato BRTakeDamage
+        }
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    #region Non usato e non serve - State
     /// <summary>
     /// Metodo che si riferisce allo stato "BR - Idle State" nel nemico "Bandito Ranged"
     /// Dallo stato di "BR - Idle State" si può passare allo stato di "BR - Aggro State" quando se stesso viene inquadrato dalla camera e il giocatore è nella stessa stanza
@@ -167,62 +203,6 @@ public class BRControllerIA : MonoBehaviour
     }
     #endregion
 
-    #region Event - BR Attack State
-    public void EventBRAttackShoot()
-    {
-        //AttackDrawLine = false; //Disattiva la linea di calcolo (?)
-        Instantiate(Bullet, agent.transform.position, agent.transform.rotation);    //Istanzia il proiettile
-        //Va in recovery
-    }
-    public void EventBRAttackFinish()
-    {
-        GetComponent<Animator>().SetBool("BR-CanAttack", false); //Finisce lo stato di attaco
-    }
-    #endregion
-
-    #region Event - BR Take Damage State
-    public void EventBRFinishTakeDamage()
-    {
-        //GetComponent<Animator>().Play("BR - Idle State"); //Temp
-
-        if (AlertDistance == true)                                                                          //Se è nel distanziamento
-        {
-            GetComponent<Animator>().Play("BR - Distancing State"); //Temp - Passaggio istantaneo           TODO: Controllare i parametri
-        }
-        else if (EnemyRenderer.isVisible && PlayerInRoom == RoomNumber)                                     //Se è nell'aggro
-        {
-            GetComponent<Animator>().Play("BR - Aggro State"); //Temp - Passaggio istantaneo                TODO: Controllare i parametri
-        }
-        else if (AlertDistance == false)                                                                    //Se è nella fase di attacco - Va modificato
-        {
-            GetComponent<Animator>().Play("BR - Attack State"); //Temp - Passaggio istantaneo               TODO: Controllare i parametri
-        }
-    }
-    #endregion
-
-
-    public Action ActionRemoveLife;
-
-    public void ColliderRemoveLife()
-    {
-        if (OtherTag == "NormalAttack")
-            Life -= AttackSystem.NormalDamage;
-        else if (OtherTag == "ChargeAttack")
-            Life -= AttackSystem.ChargeDamage;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "NormalAttack" || other.tag == "ChargeAttack")
-        {
-            OtherTag = other.tag;
-            GetComponent<Animator>().SetTrigger("BR-Damage");
-        }
-    }
+    //Controllare tutti i commenti, più precisamente i nomi degli stati, dei metodi e delle possibili funzioni
+    //Prima parte: Strutturazione in pseduo-pseudo codice del progetto e strutturazione delle cartelle, dell'animator e delle note
 }
-
-
-//Controllare tutti i commenti, più precisamente i nomi degli stati, dei metodi e delle possibili funzioni
-
-
-//Prima parte: Strutturazione in pseduo-pseudo codice del progetto e strutturazione delle cartelle, dell'animator e delle note

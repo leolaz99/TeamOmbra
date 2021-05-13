@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BRDistancing : StateMachineBehaviour
 {
-    public float Speed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -14,8 +13,8 @@ public class BRDistancing : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<BRControllerIA>().transform.LookAt(new Vector3(animator.GetComponent<BRControllerIA>().Player.transform.position.x, animator.GetComponent<BRControllerIA>().agent.transform.position.y, animator.GetComponent<BRControllerIA>().Player.transform.position.z));
-        animator.GetComponent<BRControllerIA>().agent.Move(-animator.GetComponent<BRControllerIA>().agent.transform.forward * Time.deltaTime * Speed);
+        BRControllerIA.BRController.transform.LookAt(new Vector3(BRControllerIA.BRController.Player.transform.position.x, BRControllerIA.BRController.agent.transform.position.y, BRControllerIA.BRController.Player.transform.position.z));    //Per tutta la durata dello stato guarderà il player
+        BRControllerIA.BRController.agent.Move(-BRControllerIA.BRController.agent.transform.forward * Time.deltaTime * BRControllerIA.BRController.SpeedDistancing);                                                                            //Si muoverà nella distanza opposta rispetto al player
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

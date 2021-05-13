@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class BRAggro : StateMachineBehaviour
 {
-    public float TimerAttack;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        TimerAttack = 0;
+        BRControllerIA.BRController.TimerAttack = 0;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(animator.GetComponent<BRControllerIA>().AlertDistance == false)
+        if(animator.GetComponent<BRControllerIA>().AlertDistance == false)                                              //Se non è abbastanza vicino
         {
-            animator.GetComponent<BRControllerIA>().agent.isStopped = false;
-            animator.GetComponent<BRControllerIA>().agent.SetDestination(animator.GetComponent<BRControllerIA>().Player.transform.position);
-            TimerAttack = 0;
+            BRControllerIA.BRController.agent.isStopped = false;                                                        //Rimetto in funzione il movimento
+            BRControllerIA.BRController.agent.SetDestination(BRControllerIA.BRController.Player.transform.position);    //Setto la destinazione, cioè il player
+            BRControllerIA.BRController.TimerAttack = 0;                                                                //Resetto il timer dell'attacco - Forse non serve
         }
         else
         {
-            animator.GetComponent<BRControllerIA>().agent.isStopped = true;                 //Ferma il movimento
-            TimerAttack += Time.deltaTime;                                                  //Aumenta il timer
-            if(TimerAttack >= 5)                                                            //Se il timer è maggiore di un valore TODO: Mettere 5 da inspector
-                animator.SetBool("BR-CanAttack", true);                                     //Passa di stato
+            BRControllerIA.BRController.agent.isStopped = true;                                                         //Ferma il movimento
+            BRControllerIA.BRController.TimerAttack += Time.deltaTime;                                                  //Incremento il timer
+            if(BRControllerIA.BRController.TimerAttack >= BRControllerIA.BRController.MaxTimerAttack)                   //Se il timer è maggiore di un valore predefinito da inspector
+            {
+                animator.SetBool("BR-CanAttack", true);                                                                 //Passa dallo stato di aggro allo stato di attacco
+            }
         }
     }
 
