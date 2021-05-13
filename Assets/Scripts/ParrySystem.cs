@@ -17,13 +17,11 @@ public class ParrySystem : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            //Destroy(other.gameObject);
-            EnemyManager.instance.isParryed = true;
+            other.GetComponent<EnemyManager>().isParryed = true;
             playerInput.speed = originalSpeed;
             gameObject.SetActive(false);
             PlayerManager.instance.energy += parryGainEnergy;
         }
-
         //if (other.gameObject.CompareTag("Bullet"))
         //{
         //    Destroy(other.gameObject);

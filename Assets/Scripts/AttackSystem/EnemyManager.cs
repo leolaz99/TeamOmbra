@@ -12,8 +12,6 @@ public class EnemyManager : MonoBehaviour
     public static bool isAggro = false;
 
     public Collider aggroArea;
- 
-    public static EnemyManager instance;
 
     #region Trigger Zone
     private void OnTriggerEnter(Collider other)
@@ -30,14 +28,7 @@ public class EnemyManager : MonoBehaviour
         if (Life <= 0)
         {
             Destroy(this.gameObject);
-        }
-
-        if(other.tag == "Parry")
-        {
-            if (isAttacking == true)
-                isParryed = true;
-        }
-        
+        }      
     }
     #endregion
     #region Collision Zone
@@ -60,10 +51,4 @@ public class EnemyManager : MonoBehaviour
         }
     }
     #endregion
-
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-    }
 }
